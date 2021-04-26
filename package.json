@@ -4,6 +4,7 @@
   "description": "This package converts the images under the src folder to webP and place them insider the build folder. Also, lossless compression of the images JPG/PNG and place them in the build folder.",
   "main": "convert.js",
   "dependencies": {
+    "archiver": "^5.3.0",
     "compress-images": "^1.9.9",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
@@ -16,8 +17,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "convert:lossy": "cross-env CONVERSION_MODE=lossy node ./commandline.js",
-    "convert:lossless": "cross-env CONVERSION_MODE=lossless node ./commandline.js",
+    "convert:lossy": "cross-env CONVERSION_MODE=lossy node ./cli.js",
+    "convert:lossless": "cross-env CONVERSION_MODE=lossless node ./cli.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

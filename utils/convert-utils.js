@@ -1,5 +1,12 @@
 const { webPEngineMapping } = require('../config/conversion-config');
+const fs = require('fs');
+const path = require('path');
 
+/**
+ * Given the statistic object, we return a shortened version for our logging
+ * @param {Object} statistic An object containing the data about the image conversion
+ * @returns Object containing the details about the conversion
+ */
 function conversionLog(statistic) {
     const result = {
         status: 'success'
@@ -28,7 +35,7 @@ function conversionLog(statistic) {
     }
 
     result.algorithm = statistic.algorithm;
-    result.sizeofInput = statistic.size_input;
+    result.sizeofInput = statistic.size_in;
     result.sizeofOutput = statistic.size_output;
     result.percent = statistic.percent;
     return result;
@@ -46,14 +53,25 @@ function getWebPSettings(settings) {
         if (!!webPEngineMapping[key]) {
             webPSettings[key].engine = webPEngineMapping[key];
             webPSettings[key].command = false;
-        } else {
-            delete webPSettings[key];
         }
     });
     return webPSettings;
 }
 
+/**
+ * Given the absolute path, create it if it doesn't exist
+ * @param {string} dirPath absolute path
+ */
+function createDirectory(dirPath) {
+    const fullPath = path.resolve(dirPath);
+    if (!fs.existsSync(fullPath)) {
+        fs.mkdirSync(fullPath, { recursive: true });
+    }
+    return fullPath;
+}
+
 module.exports = {
     conversionLog,
-    getWebPSettings
+    getWebPSettings,
+    createDirectory
 };
